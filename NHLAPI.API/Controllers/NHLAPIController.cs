@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using NHLAPI.Domain;
 
 namespace NHLAPI.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/api/[controller]")]
 public class NHLAPIController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
 
     private readonly ILogger<NHLAPIController> _logger;
 
@@ -18,10 +15,11 @@ public class NHLAPIController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<NHLAPIController> Get()
+    [HttpGet(Name = "GetAllTeams")]
+    [Route("/Teams")]
+    public async Task<ActionResult<Teams>> GetAllTeams()
     {
         _logger.LogDebug("Get Was Called, yo!");
-        return null;
+        return Ok(new Teams());
     }
 }
